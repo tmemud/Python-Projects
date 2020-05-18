@@ -1,0 +1,112 @@
+
+# functions definition for provincial, federal tax, cpp and EI
+
+def provincial_tax (annualGrossIncome):
+
+    level1 = (131220 - 0) * 0.10
+    level2 = (157464 - 131220 ) * 0.12 +  level1
+    level3 = (209952 - 157464 ) * 0.13 + level2
+    level4 = (314928 - 209952) * 0.14 + level3
+
+    if annualGrossIncome >= 0 and annualGrossIncome < 131220.01 :
+        return annualGrossIncome * 0.10
+
+    elif annualGrossIncome >= 131220.01 and annualGrossIncome < 157464.01 :
+        provincialTax = ((annualGrossIncome - 131220) * 0.12) + level1
+        return provincialTax
+
+    elif annualGrossIncome >= 157464.01 and annualGrossIncome < 209952.01 :
+        provincialTax = ((annualGrossIncome - 157464 ) * 0.13) + level2
+        return provincialTax
+
+    elif annualGrossIncome >= 209952.01 and annualGrossIncome < 314928:
+        provincialTax = ((annualGrossIncome - 209953 ) * 0.14) + level3
+        return provincialTax
+    else:
+        provincialTax = ((annualGrossIncome - 314928 ) * 0.15)  + level4
+        return provincialTax
+
+
+def federeal_tax (annualGrossIncome):
+
+    flevel1= (48534 - 0) * 0.15
+    flevel2 = (97068 - 48534) * 0.205 + flevel1
+    flevel3 = (150472 - 97068) * 0.26 + flevel2
+    flevel4 = (214366 - 150472 ) * 0.29 + flevel3
+
+
+    if annualGrossIncome <= 48534 :
+
+        federalTax = annualGrossIncome * 0.15
+        return federalTax
+    elif annualGrossIncome >= 48535 :
+
+        federalTax = ((annualGrossIncome - 48534) * 0.205) + flevel1
+        return federalTax
+    elif annualGrossIncome >= 97069 :
+
+        federalTax = ((annualGrossIncome - 48534) * 0.26) +  flevel2
+        return federalTax
+    elif annualGrossIncome >= 150473 :
+
+        federalTax = ((annualGrossIncome - 48534) * 0.29) +  flevel3
+        return federalTax
+    else:
+        federalTax = ((annualGrossIncome - 214367 * 0.33))  + flevel4
+        return federalTax
+
+
+def c_pp (annualGrossIncome) :
+    cpp = annualGrossIncome * 0.0525
+    if cpp > 2898:
+        return 2898
+    else:
+        return cpp
+
+def employment_insurance (annualGrossIncome):
+    employmentInsurance = annualGrossIncome * 0.0158
+    if employmentInsurance > 856.39:
+        return 2898
+    else:
+        return employmentInsurance
+
+
+
+
+
+
+#input for gross income
+
+sannual_gross_income = input ("Enter your annual gross income: ")
+
+
+#conversion of string into float
+try:
+    annualGrossIncome = float(sannual_gross_income)
+except:
+    print ("please enter only digits:")
+    quit()
+
+
+#formula calculation
+final_provincial_tax = provincial_tax (annualGrossIncome)
+final_federal_tax = federeal_tax (annualGrossIncome)
+finalEI = employment_insurance (annualGrossIncome)
+finalcpp = c_pp (annualGrossIncome)
+employeeAnnualNetIncome = annualGrossIncome - (final_federal_tax + final_provincial_tax + finalEI + finalcpp)
+
+
+#output
+print ("Employee annual gross income: ", annualGrossIncome)
+print ("Employees annual net income: ", round(employeeAnnualNetIncome, 2) )
+print ("Annual provincial: ", round (final_provincial_tax, 2))
+print ("Annual federal tax:", round (final_federal_tax, 2))
+print ('Annual CPP: ', finalcpp)
+print ('Annual EI: ', finalEI)
+
+
+
+
+print(provincial_tax(100000))
+print(provincial_tax(500000))
+print(provincial_tax(120000))
